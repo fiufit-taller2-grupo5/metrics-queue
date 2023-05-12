@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics-queue-deployment
+  labels:
+    app: metrics-queue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metrics-queue
+  template:
+    metadata:
+      labels:
+        app: metrics-queue
+    spec:
+      containers:
+        - name: metrics-queue
+          image: registry.cloud.okteto.net/prod-szwtomas/metrics-queue:v3
+          ports:
+            - containerPort: 80
+      restartPolicy: Always

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrics-queue
+  labels:
+    app: metrics-queue
+spec:
+  type: ClusterIP
+  selector:
+    app: metrics-queue
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
