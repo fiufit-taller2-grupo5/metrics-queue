@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -24,8 +25,11 @@ func (controller *MetricsController) AddSystemMetric(c *gin.Context) {
 		return
 	}
 
+	fmt.Println("Trying to add json: " + string(payloadJson))
+
 	redisErr := controller.redisClient.AddToList(string(payloadJson), "system-metrics")
 	if redisErr != nil {
+		fmt.Println("Failed adding to redis: " + err.Error())
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": marshalErr.Error()})
 		return
 	}
