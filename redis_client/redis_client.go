@@ -24,8 +24,8 @@ func NewRedisClient() *RedisClient {
 }
 
 func (redisClient *RedisClient) AddToList(jsonString string, listName string) error {
-	println("Received jsonstring: " + jsonString)
-	println("Received listname: " + listName)
+	fmt.Println("Received jsonstring: " + jsonString)
+	fmt.Println("Received listname: " + listName)
 	_, err := redisClient.client.RPush(context.Background(), listName, jsonString).Result()
 	if err != nil {
 		return err
@@ -36,7 +36,8 @@ func (redisClient *RedisClient) AddToList(jsonString string, listName string) er
 
 func getHostFromEnvironment() string {
 	if os.Getenv("environment") == "production" {
-		return "redis_client-service"
+		fmt.Println("found environment=production")
+		return "redis-service"
 	} else {
 		return "localhost"
 	}
