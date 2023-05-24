@@ -29,8 +29,8 @@ func (controller *MetricsController) AddSystemMetric(c *gin.Context) {
 
 	redisErr := controller.redisClient.AddToList(string(payloadJson), "system-metrics")
 	if redisErr != nil {
-		fmt.Println("Failed adding to redis: " + err.Error())
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": marshalErr.Error()})
+		fmt.Println("Failed adding to redis: " + redisErr.Error())
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": redisErr.Error()})
 		return
 	}
 
